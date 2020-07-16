@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="container-fluid">
-        <!-- Navbar Header  --><a href="index.html" class="navbar-brand"><img src="{{ asset('images/logo.png')}}" alt="..."></a>
+        <!-- Navbar Header  --><a href="/" class="navbar-brand"><img src="{{ asset('images/logo.png')}}" alt="..."></a>
           <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
           <!-- Navbar Collapse -->
           <div id="navbarCollapse" class="collapse navbar-collapse">
@@ -116,7 +116,7 @@
               <!-- Search Button-->
               <div class="search"><i class="icon-search"></i></div>
               <!-- User Not Logged - link to login page-->
-              <div class="user"> <a id="userdetails" href="customer-login" class="user-link"><i class="icon-profile"></i></a></div>
+              <div class="user"> <a id="userdetails" href="/customer/login" class="user-link"><i class="icon-profile"></i></a></div>
               <!-- Cart Dropdown-->
               <div class="cart dropdown show"><a id="cartdetails" href="https://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="icon-cart"></i>
                   <div class="cart-no">1</div></a><a href="cart.html" class="text-primary view-cart">View Cart</a>
@@ -244,7 +244,7 @@
             <div class="site-links col-lg-2 col-md-6">
               <h5 class="text-uppercase">Company</h5>
               <ul class="list-unstyled">
-                <li> <a href="customer-login">Login</a></li>
+                <li> <a href="/customer/login">Login</a></li>
                 <li> <a href="#">Register</a></li>
                 <li> <a href="#">Wishlist</a></li>
                 <li> <a href="#">Our Products</a></li>

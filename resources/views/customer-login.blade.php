@@ -30,19 +30,43 @@
                 <p class="lead">Already our customer?</p>
                 <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
                 <hr>
-                <form action="customer-orders.html" method="post">
+                <form method="post" action="{{ route('customer.login.submit') }}">
+                    {{ csrf_field() }}
                   <div class="form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input id="email" type="text" class="form-control">
+                    <input id="email" name="email" type="email" class="form-control">
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                   </div>
                   <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input id="password" type="password" class="form-control">
+                    <input id="password" name="password" type="password" class="form-control">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
+                  <div class="form-group">
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                    <label class="form-check-label" for="remember">
+                        {{ __('Remember Me') }}
+                    </label>
                   </div>
                   <hr>
                   <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
-                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Log in With Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Google</a>
+                    <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
+                    @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
                   </div>
                 </form>
               </div>
@@ -73,7 +97,8 @@
                   </div>
                   <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary"><i class="icon-profile"></i> Register</button>
-                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Register With Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn btn-primary"><i class="fa fa-google"></i> Google</a>
+                    <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
                   </div>
                 </form>
               </div>

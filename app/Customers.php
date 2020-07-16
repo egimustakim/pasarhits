@@ -9,8 +9,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customers extends Authenticatable
 {
+    use Notifiable;
+
+    protected $guard = 'customer';
+
     protected $table = 'customers';
-    protected $fillable =['name, email, provider, provider_id'];
+
+    protected $fillable =[
+        'name, email, provider, provider_id'
+    ];
 
     protected $hidden = [
         'password', 'remember_token',

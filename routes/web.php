@@ -17,16 +17,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('customer-login', function () {
-    return view('customer-login');
+Route::prefix('admin')->group(function () {
+    Route::get('/login', 'Auth\CustomerLoginController@showLoginForm')->name('customer.login');
+    Route::post('/login', 'Auth\CustomerLoginController@login')->name('customer.login.submit');
+    Route::get('/profile', 'CustomerController@profile')->name('customer.profile');
+    Route::post('/logout', 'Auth\CustomerLoginController@login')->name('customer.logout');
 });
 
-Route::get('customer-profile', function () {
-    return view('customer-profile');
-});
-
+//social login
 Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
-
 Route::get('/callback/{provider}', 'SocialController@callback');
 
 //back-end

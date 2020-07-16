@@ -26,7 +26,7 @@ class SocialController extends Controller
 
         // return Socialite::with($provider)->redirect('customer-profile');
 
-        return redirect()->to('/customer-profile');
+        return redirect()->intended(route('customer.profile'));
 
     }
 
