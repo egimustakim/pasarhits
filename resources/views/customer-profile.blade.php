@@ -38,7 +38,7 @@
                     <span><span class="icon icon-map"></span>Addresses</span>
                 </a>
                 <a href="logout" class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><span class="icon icon-map"></span>Logout</span>
+                    <span><span class="fa fa-sign-out"></span>Logout</span>
                 </a>
             </nav>
           </div>
