@@ -17,11 +17,14 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::prefix('admin')->group(function () {
+Route::prefix('customer')->group(function () {
     Route::get('/login', 'Auth\CustomerLoginController@showLoginForm')->name('customer.login');
     Route::post('/login', 'Auth\CustomerLoginController@login')->name('customer.login.submit');
     Route::get('/profile', 'CustomerController@profile')->name('customer.profile');
-    Route::post('/logout', 'Auth\CustomerLoginController@login')->name('customer.logout');
+    Route::group(['middleware' => 'auth:customer'], function () {
+        Route::get('/profile', 'CustomerController@profile')->name('customer.profile');
+        Route::get('/logout', 'Auth\CustomerLoginController@logout')->name('customer.logout');;
+    });
 });
 
 //social login
@@ -37,35 +40,20 @@ Auth::routes([
 Route::get('rlaadmin', 'RlaadminController@index')->name('rlaadmin');
 
 Route::group(['middleware' => 'auth'], function () {
-
     Route::resource('colors', 'ColorController');
-
     Route::resource('brands', 'BrandsController');
-
     Route::resource('colors', 'ColorController');
-
     Route::resource('materials', 'MaterialsController');
-
     Route::get('provinces', 'CountryController@provinces');
-
     Route::get('districts', 'CountryController@districts');
-
     Route::get('regencies', 'CountryController@regencies');
-
     Route::get('villages', 'CountryController@villages');
-
     Route::get('json-regencies', 'CountryController@regenciesjson');
-
     Route::get('json-districts', 'CountryController@districtsjson');
-
     Route::get('json-villages', 'CountryController@villagesjson');
-
     Route::get('shipping', 'ShippingController@index');
-
     Route::post('shipping/addprovider', 'ShippingController@addprovider');
-
     Route::resource('categories', 'CategoriesController');
-
 });
 
 // Route::get('/home', 'HomeController@index')->name('home');

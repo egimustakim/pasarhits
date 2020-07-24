@@ -37,14 +37,9 @@
                 <a href="customer-addresses.html" class="list-group-item d-flex justify-content-between align-items-center">
                     <span><span class="icon icon-map"></span>Addresses</span>
                 </a>
-                <a class="dropdown-item" href="{{ route('customer.logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                <a href="logout" class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><span class="icon icon-map"></span>Logout</span>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
             </nav>
           </div>
           <div class="col-lg-8 col-xl-9 pl-lg-3">

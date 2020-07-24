@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class CustomerLoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:customer');
+        $this->middleware('guest:customer', ['except' => ['logout']]);
     }
 
     public function showLoginForm()
@@ -37,6 +38,7 @@ class CustomerLoginController extends Controller
     public function logout()
     {
         Auth::guard('customer')->logout();
+
         return redirect()->route('customer.login');
     }
 }
