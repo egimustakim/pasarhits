@@ -40,10 +40,12 @@ Auth::routes([
 Route::get('rlaadmin', 'RlaadminController@index')->name('rlaadmin');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('categories', 'CategoriesController');
     Route::resource('colors', 'ColorController');
     Route::resource('brands', 'BrandsController');
     Route::resource('colors', 'ColorController');
     Route::resource('materials', 'MaterialsController');
+    // wilayah
     Route::get('provinces', 'CountryController@provinces');
     Route::get('districts', 'CountryController@districts');
     Route::get('regencies', 'CountryController@regencies');
@@ -51,9 +53,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('json-regencies', 'CountryController@regenciesjson');
     Route::get('json-districts', 'CountryController@districtsjson');
     Route::get('json-villages', 'CountryController@villagesjson');
+    // wilayah
+    Route::resource('roles', 'RolesController');
     Route::get('shipping', 'ShippingController@index');
     Route::post('shipping/addprovider', 'ShippingController@addprovider');
-    Route::resource('categories', 'CategoriesController');
+    Route::resource('users', 'UsersController');
 });
 
 // Route::get('/home', 'HomeController@index')->name('home');

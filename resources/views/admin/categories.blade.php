@@ -27,58 +27,59 @@
 
         <div class="clearfix"></div>
 
-      <!-- error message-->
-      <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-          @if(Session::has('alert-' . $msg))
+        <!-- error message-->
+        <div class="flash-message">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
 
-          <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-          @endif
-        @endforeach
-      </div> <!-- end .flash-message -->
+            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+            @endforeach
+        </div>
+        <!-- end .flash-message -->
 
-          <!-- Modal Add Category-->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add Categories</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{route('categories.store')}}" method="POST" class="form-horizontal form-label-left">
-                        {{ csrf_field() }}
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">New Categories</label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" class="form-control" name="inputName" placeholder="Categories Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Categories</label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <select class="form-control" name="parentCat" id="">
-                                        <option value="">---- SELECT PARENT ----</option>
-                                        @foreach ($categories as $cat)
-                                        <option value="{{ $cat['id'] }}">{{ $cat['name']}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                        </form>
+        <!-- Modal Add Category-->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Add Categories</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 </div>
+                <div class="modal-body">
+                    <form action="{{route('categories.store')}}" method="POST" class="form-horizontal form-label-left">
+                    {{ csrf_field() }}
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">New Categories</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <input type="text" class="form-control" name="inputName" placeholder="Categories Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Parent Categories</label>
+                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                <select class="form-control" name="parentCat" id="">
+                                    <option value="">---- SELECT PARENT ----</option>
+                                    @foreach ($categories as $cat)
+                                    <option value="{{ $cat['id'] }}">{{ $cat['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                    </form>
             </div>
-            <!-- Modal Add Category-->
+            </div>
+        </div>
+        <!-- Modal Add Category-->
 
-            <!-- Modal Edit Category-->
+        <!-- Modal Edit Category-->
         <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -110,36 +111,36 @@
         </div>
         <!-- Modal Edit Category-->
 
-          <!-- Modal Delete Category-->
-          <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">Delete Color</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                      <div class="modal-body">
-                          <form action="{{ route('categories.destroy', 'delete') }}" method="post" class="form-horizontal form-label-right">
-                          {{ method_field('delete')}}
-                          {{ csrf_field() }}
-                          <div class="form-group">
-                              <p>Are you sure want to delete this data?</p>
-                              <input type="hidden" class="form-control" name="categoryId" id="cate_id">
-                          </div>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                          <button type="submit" class="btn btn-danger">Delete</button>
-                      </div>
-                          </form>
-                  </div>
-              </div>
-          </div>
-          <!-- Modal Delete Category-->
+        <!-- Modal Delete Category-->
+        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Color</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('categories.destroy', 'delete') }}" method="post" class="form-horizontal form-label-right">
+                        {{ method_field('delete')}}
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <p>Are you sure want to delete this data?</p>
+                            <input type="hidden" class="form-control" name="categoryId" id="cate_id">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete Category-->
 
-          <div class="clearfix"></div>
+        <div class="clearfix"></div>
 
         <!-- Tabel Category-->
           <div class="row">

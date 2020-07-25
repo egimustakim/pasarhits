@@ -80,7 +80,7 @@
                         <li><a href="ongkir">Ongkir SiCepat</a></li>
                         <li><a href="ongkir">Ongkir Ninja</a></li>
                     </ul>
-                </li>
+                  </li>
                   <li><a><i class="fa fa-globe"></i> Region <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                           <li><a href="provinces">Provinces</a></li>
@@ -89,6 +89,12 @@
                           <li><a href="villages">Villages</a></li>
                       </ul>
                   </li>
+                  <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="users">User</a></li>
+                        <li><a href="roles">Role</a></li>
+                    </ul>
+                </li>
                 </ul>
               </div>
 
