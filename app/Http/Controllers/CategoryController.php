@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Categories;
+use App\Category;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::all();
-        return view('admin/categories', compact('categories'));
+        $categories = Category::all();
+        return view('admin/category', compact('categories'));
     }
 
     /**
@@ -42,8 +42,8 @@ class CategoriesController extends Controller
         $count = Categories::where('name', '=' ,$request->inputName)->where('parent_id', '=' ,$request->parentCat)->first();
         if ($count)
         {
-            $request->session()->flash('alert-info', 'Category name is exist!');
-            return redirect('categories');
+            $request->session()->flash('alert-warning', 'Category name is exist!');
+            return redirect()->back()->withInput();
         }
         if ($categories->save())
         {
@@ -52,8 +52,8 @@ class CategoriesController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Category was failed added!');
-            return redirect('categories');
+            $request->session()->flash('alert-warning', 'Category was failed added!');
+            return redirect()->back()->withInput();
         }
     }
     /**
@@ -96,8 +96,8 @@ class CategoriesController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Category was failed added!');
-            return back();
+            $request->session()->flash('alert-warning', 'Category was failed added!');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -117,7 +117,7 @@ class CategoriesController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Category delete failed!');
+            $request->session()->flash('alert-warning', 'Category delete failed!');
             return back();
         }
     }

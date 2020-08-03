@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use app\User;
 use Spatie\Permission\Models\Role;
 
-class RolesController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +17,9 @@ class RolesController extends Controller
      */
     public function index()
     {
+        $users = User::all();
         $roles = Role::all();
-        return view('admin/role' , compact('roles'));
+        return view('admin/user' , compact('users', 'roles'));
     }
 
     /**
@@ -36,14 +40,28 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $roles = New Role;
-        $roles->name = $request->roleName;
-        if ($roles->save()) {
-            $request->session()->flash('alert-success', 'Role was successful added!');
-            return redirect('roles');
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admin'],
+            'password' => ['required', 'string', 'min:5', 'confirmed'],
+        ]);
+
+        if ($validator->fails()) {
+            $request->session()->flash('alert-warning', 'User add failed!');
+            return redirect()->back()->withInput();
+        }
+
+        $user = New User();
+        $user->password = Hash::make($request->password);
+        $user->email = $request->email;
+        $user->name = $request->name;
+        if($user->save()) {
+            $request->session()->flash('alert-success', 'User was successful added!');
+            return redirect('users');
         } else {
-            $request->session()->flash('alert-failed', 'Role add failed!');
-            return redirect('roles');
+            $request->session()->flash('alert-warning', 'User add failed!');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -90,5 +108,14 @@ class RolesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function fetchdata(Request $request)
+    {
+        $data = User::select("name")
+                ->where("name","LIKE","%{$request->input('query')}%")
+                ->get();
+
+        return response()->json($data);
     }
 }

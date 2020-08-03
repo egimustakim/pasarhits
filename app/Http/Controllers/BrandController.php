@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Brands;
 use Illuminate\Http\Request;
 
-class BrandsController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -45,8 +45,8 @@ class BrandsController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Brand was failed added!');
-            return redirect('brands');
+            $request->session()->flash('alert-warning', 'Brand was failed added!');
+            return redirect()->back()->withInput();
         }
     }
 

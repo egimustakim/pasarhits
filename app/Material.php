@@ -4,13 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Colors extends Model
+class Materials extends Model
 {
     protected $fillable = ['name'];
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name']= strtoupper($value);
+        $this->attributes['name'] = ucwords($value);
     }
-
 }

@@ -19,6 +19,7 @@ class ShippingController extends Controller
             'shipName' => 'required',
             'shipType' => 'required'
         ]);
+
         $shipping = New Shipping();
         $shipping->name = $request->get('shipName');
         $shipping->type = $request->get('shipType');

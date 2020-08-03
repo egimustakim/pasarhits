@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use app\Adminroles;
 use app\User;
 
-class UsersController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin/user' , compact('users'));
+        $roles = Role::all();
+        return view('admin/role' , compact('roles'));
     }
 
     /**
@@ -36,7 +38,15 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $roles = New Role;
+        $roles->name = $request->roleName;
+        if ($roles->save()) {
+            $request->session()->flash('alert-success', 'Role was successful added!');
+            return redirect('roles');
+        } else {
+            $request->session()->flash('alert-warning', 'Role add failed!');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -82,5 +92,22 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function roleassign(Request $request)
+    {
+        $role = Adminroles::all();
+        dd($role);
+        // $adminid = User::select('id')->where('name', '=', $request->searchName)->get();
+        // $role = New adminroles;
+        // $role->role_id = $request->role;
+        // $role->admin_id = $adminid;
+        // if ($role->save()) {
+        //     $request->session()->flash('alert-success', 'Role was successful assigned!');
+        //     return redirect('roles');
+        // } else {
+        //     $request->session()->flash('alert-warning', 'Role assigned failed!');
+        //     return redirect()->back()->withInput();
+        // }
     }
 }

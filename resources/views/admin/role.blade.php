@@ -68,10 +68,10 @@
                             {{ method_field('patch')}}
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Material Name</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Role Name</label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="hidden" class="form-control" name="categoryId" id="cat_id">
-                                    <input type="text" class="form-control" name="categoryName" id="cat_name">
+                                    <input type="hidden" class="form-control" name="roleId" id="rol_id">
+                                    <input type="text" class="form-control" name="roleName" id="rol_name">
                                 </div>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <p>Are you sure want to delete this data?</p>
-                                <input type="hidden" class="form-control" name="categoryId" id="cate_id">
+                                <input type="hidden" class="form-control" name="roleId" id="rol_id">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -153,8 +153,8 @@
                         <tr>
                           <th scope="row">{{ $no }}</th>
                           <td>{{ $role['name'] }}</td>
-                          <td><button class="btn btn-info btn-sm" data-matname="" data-matid="" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
-                          <td><button class="btn btn-danger btn-sm" data-matid="" data-toggle="modal" data-target="#modalDelete">Delete</button></a></td>
+                          <td><button class="btn btn-info btn-sm" data-rolesname="{{ $role['name'] }}" data-roleid="{{ $role['id'] }}" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
+                          <td><button class="btn btn-danger btn-sm" data-roleid="{{ $role['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></a></td>
                           <?php $no++ ?>
                           @endforeach
                         </tr>
@@ -170,24 +170,27 @@
     <!-- /page content -->
 @endsection
 
+@section('scripts')
 <script>
     $('#modalEdit').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        var cat_name = button.data('catname') // Extract info from data-* attributes
-        var cat_id = button.data('catid')
+        var rol_name = button.data('rolesname') // Extract info from data-* attributes
+        var rol_id = button.data('roleid')
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-body #cat_name').val(cat_name)
-        modal.find('.modal-body #cat_id').val(cat_id)
+        modal.find('.modal-body #rol_name').val(rol_name)
+        modal.find('.modal-body #rol_id').val(rol_id)
     })
 
     $('#modalDelete').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        var cate_id = button.data('catid') // Extract info from data-* attributes
+        var rol_id = button.data('roleid') // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-body #cate_id').val(cate_id)
+        modal.find('.modal-body #rol').val(rol_id)
     })
-    </script>
+</script>
+
+@endsection

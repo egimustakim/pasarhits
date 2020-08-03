@@ -39,8 +39,8 @@ class ColorController extends Controller
         $count = Colors::where('name', '=' ,$request->colorname)->first();
         if($count)
         {
-            $request->session()->flash('alert-info', 'Color data exist');
-            return back();
+            $request->session()->flash('alert-warning', 'Color data exist');
+            return redirect()->back()->withInput();
         }
         $color = New Colors;
         $color->name = $request->colorname;
@@ -51,8 +51,8 @@ class ColorController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Color was failed added!');
-            return back();
+            $request->session()->flash('alert-warning', 'Color was failed added!');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -90,8 +90,8 @@ class ColorController extends Controller
         $count = Colors::where('name', '=' ,$request->colorname)->first();
         if($count)
         {
-            $request->session()->flash('alert-info', 'Color data exist');
-            return back();
+            $request->session()->flash('alert-warning', 'Color data exist');
+            return redirect()->back()->withInput();
         }
         $color = Colors::findOrFail($request->colorid);
         $color->name = $request->colorname;
@@ -102,8 +102,8 @@ class ColorController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Color update failed');
-            return back();
+            $request->session()->flash('alert-warning', 'Color update failed');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -123,7 +123,7 @@ class ColorController extends Controller
         }
         else
         {
-            $request->session()->flash('alert-info', 'Delete data failed');
+            $request->session()->flash('alert-warning', 'Delete data failed');
             return back();
         }
     }

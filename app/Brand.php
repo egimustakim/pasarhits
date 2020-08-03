@@ -10,7 +10,7 @@ class Brands extends Model
 
     public function setNameAttribute($value)
     {
-        $this->attributes['name'] = strtoupper($value);
+        $this->attributes['name'] = ucwords($value);
 
     }
 }
