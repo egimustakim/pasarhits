@@ -36,7 +36,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $categories = New Categories();
+        $categories = New Category();
         $categories->name = $request->inputName;
         $categories->parent_id = $request->parentCat;
         $count = Categories::where('name', '=' ,$request->inputName)->where('parent_id', '=' ,$request->parentCat)->first();
@@ -87,7 +87,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request)
     {
-        $categories = Categories::findOrFail($request->categoryId);
+        $categories = Category::findOrFail($request->categoryId);
         $categories->name = $request->categoryName;
         if($categories->update())
         {
@@ -109,7 +109,7 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request)
     {
-        $categories = Categories::findOrFail($request->categoryId);
+        $categories = Category::findOrFail($request->categoryId);
         if($categories->delete())
         {
             $request->session()->flash('alert-success', 'Category deleted!');

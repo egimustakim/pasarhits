@@ -39,7 +39,7 @@
                                     <input class="typeahead form-control" type="text" id="searchName" name="searchName" type="text" placeholder="Type a name">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control" name="role" id="role" >
+                                    <select class="form-control" name="role_id" id="role" >
                                         <option value="">-- Choose Role --</option>
                                         @foreach ($roles as $role)
                                         <option value="{{ $role['id'] }}">{{ $role['name']}}</option>
@@ -255,12 +255,12 @@
                       </thead>
                       <tbody>
                           <?php $no = 1 ?>
-                          @foreach ($users as $user)
+                          @foreach ($users as $result)
                         <tr>
                           <th scope="row">{{ $no }}</th>
-                          <td>{{ $user['name'] }}</td>
-                          <td>{{ $user['email'] }}</td>
-                          <td>role</td>
+                          <td>{{ $result['name'] }}</td>
+                          <td>{{ $result['email'] }}</td>
+                          <td>{{ str_replace(array('[[',']]','[',']','"',),'',$result->getRoleNames()) }}</td>
                           <td><button class="btn btn-info btn-sm" data-matname="" data-matid="" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
                           <td><button class="btn btn-danger btn-sm" data-matid="" data-toggle="modal" data-target="#modalDelete">Delete</button></a></td>
                           <?php $no++ ?>

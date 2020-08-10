@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use app\Adminroles;
-use app\User;
+use App\User;
 
 class RoleController extends Controller
 {
@@ -96,18 +95,29 @@ class RoleController extends Controller
 
     public function roleassign(Request $request)
     {
-        $role = Adminroles::all();
-        dd($role);
-        // $adminid = User::select('id')->where('name', '=', $request->searchName)->get();
-        // $role = New adminroles;
+        // $adminid = User::where('name', '=', $request->searchName)->first();
+        // $result = $adminid->id;
+        // $role = New Adminrole;
         // $role->role_id = $request->role;
-        // $role->admin_id = $adminid;
-        // if ($role->save()) {
-        //     $request->session()->flash('alert-success', 'Role was successful assigned!');
-        //     return redirect('roles');
-        // } else {
-        //     $request->session()->flash('alert-warning', 'Role assigned failed!');
-        //     return redirect()->back()->withInput();
-        // }
+        // $role->admin_id = $result;
+        $user = User::where('name', '=', $request->searchName)->first();
+        $role = $request->role_id;
+        if ($user->assignRole($role)) {
+            $request->session()->flash('alert-success', 'Role was successful assigned!');
+            return redirect()->route('users.index');
+        } else {
+            $request->session()->flash('alert-warning', 'Role assigned failed!');
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function punyarole()
+    {
+        $users = User::with('roles')->get();
+        foreach ($users as $user)
+        {
+            echo json_encode($user->getRoleNames());
+        }
+
     }
 }

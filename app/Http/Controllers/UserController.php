@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use app\User;
+use App\User;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         $roles = Role::all();
         return view('admin/user' , compact('users', 'roles'));
     }

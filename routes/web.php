@@ -63,4 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 });
 
+
+Route::get('punyarole', 'RoleController@punyarole');
 // Route::get('/home', 'HomeController@index')->name('home');
