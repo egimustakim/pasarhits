@@ -119,6 +119,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Add New Role</button>
+                    <a href="{{ url('rlaadmin/permissionlist') }}" class="btn btn-primary">Assign Permission</a>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>

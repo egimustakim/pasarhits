@@ -44,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/colors', 'ColorController');
         Route::resource('/brands', 'BrandController');
         Route::resource('/colors', 'ColorController');
-        Route::resource('/materials', 'MaterialController');
         // wilayah
         Route::get('/provinces', 'CountryController@provinces');
         Route::get('/districts', 'CountryController@districts');
@@ -54,6 +53,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/json-districts', 'CountryController@districtsjson');
         Route::get('/json-villages', 'CountryController@villagesjson');
         // wilayah
+        Route::resource('/materials', 'MaterialController');
+        Route::resource('/permissions', 'PermissionController');
+        Route::get('/json-permissions', 'PermissionController@permissionJson');
+        Route::get('/permissionlist', 'PermissionController@permissionList');
+        Route::post('/permissionassign', 'PermissionController@permissionAssign')->name('permissionassign');
         Route::resource('/roles', 'RoleController');
         Route::post('/roleassign', 'RoleController@roleassign')->name('role.assign');
         Route::get('/shipping', 'ShippingController@index');
@@ -62,7 +66,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/fetchdata', 'UserController@fetchdata')->name('fetchdata');
     });
 });
-
 
 Route::get('punyarole', 'RoleController@punyarole');
 // Route::get('/home', 'HomeController@index')->name('home');

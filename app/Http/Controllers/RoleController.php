@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\User;
 
 class RoleController extends Controller
@@ -95,11 +96,6 @@ class RoleController extends Controller
 
     public function roleassign(Request $request)
     {
-        // $adminid = User::where('name', '=', $request->searchName)->first();
-        // $result = $adminid->id;
-        // $role = New Adminrole;
-        // $role->role_id = $request->role;
-        // $role->admin_id = $result;
         $user = User::where('name', '=', $request->searchName)->first();
         $role = $request->role_id;
         if ($user->assignRole($role)) {
@@ -113,11 +109,64 @@ class RoleController extends Controller
 
     public function punyarole()
     {
-        $users = User::with('roles')->get();
-        foreach ($users as $user)
+        // $a = array('car', 'motor', 'bajaj');
+        // $b = array('car', 'sepeda', 'bentor');
+        // foreach ($a as $c)
+        // {
+        //     if (in_array($c,$b))
+        //     {
+        //         echo "<b>" . $c . "</b>";
+        //         echo "\r\n";
+        //     } else
+        //     {
+        //         echo $c;
+        //         echo "\r\n";
+        //     }
+        // }
+        $roles = Role::where('id', '=', 2)->with(['permissions'], 'name')->get();
+        $permissions = Permission::select('name')->get();
+        foreach ($roles as $role)
         {
-            echo json_encode($user->getRoleNames());
-        }
+            foreach ($permissions as $permission)
+            {
+                $roleper = array($role['permissions']);
+                $pername = array($permissions);
+                if (in_array($pername,$roleper))
+                {
+                    echo "exist";
+                    // echo "<b>" . $permission['name'] . "</b>";
+                    // echo "\r\n";
+                } else {
+                    echo "not";
+                    // echo $permission['name'];
+                    // echo "\r\n";
+                }
 
+            }
+            // $roleper = count($role['permissions']);
+            // for($no = 0; $no < $roleper; $no++ )
+            // {
+            //     echo $role['permissions'][$no]['name'];
+            // }
+        }
+        // return $users;
+        // $no = 0;
+        // foreach ($roles as $role)
+        // {
+        //     echo $role['name'];
+        //     echo " ";
+        //     foreach ($permissions as $permission)
+        //     {
+        //         $roleper = array($role->getPermissionNames());
+        //         $pername = $permission['name'];
+        //         if (in_array($pername, $roleper)) {
+        //             echo "array exist";
+        //         } else {
+        //             echo "array not exist";
+        //         }
+                // echo str_replace(array('[[',']]','[',']','"',),'',$result->getPermissionNames());
+        //         echo "\r\n";
+        //     }
+        // }
     }
 }
