@@ -42,7 +42,7 @@ class RoleController extends Controller
         $roles->name = $request->roleName;
         if ($roles->save()) {
             $request->session()->flash('alert-success', 'Role was successful added!');
-            return redirect()->route('roles.index');
+            return back();
         } else {
             $request->session()->flash('alert-warning', 'Role add failed!');
             return redirect()->back()->withInput();
@@ -78,9 +78,24 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $roles = Role::findOrFail($request->roleId);
+        $roles->name = $request->roleName;
+        $count = Role::where('name', '=' ,$request->roleName)->first();
+        if ($count)
+        {
+            $request->session()->flash('alert-warning', 'Role name is exist!');
+            return redirect()->back()->withInput();
+        }
+        if ($roles->update())
+        {
+            $request->session()->flash('alert-success', 'Role successful updated!');
+            return back();
+        } else {
+            $request->session()->flash('alert-warning', 'Role update failed!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -98,10 +113,10 @@ class RoleController extends Controller
             if ($roles->delete())
             {
                 $request->session()->flash('alert-success', 'Role permissions successful synchronized!');
-                return redirect()->route('roles.index');
+                return back();
             } else {
                 $request->session()->flash('alert-warning', 'Role permissions fail synchronized!');
-                return redirect()->back();
+                return back();
             }
         } else {
             $request->session()->flash('alert-warning', 'Something went wrong!');
@@ -115,7 +130,7 @@ class RoleController extends Controller
         $roles = $request->role_id;
         if ($users->assignRole($roles)) {
             $request->session()->flash('alert-success', 'Role was successful assigned!');
-            return redirect()->route('users.index');
+            return back();
         } else {
             $request->session()->flash('alert-warning', 'Role assigned failed!');
             return redirect()->back()->withInput();
