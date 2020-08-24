@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $categories = New Category();
         $categories->name = $request->inputName;
         $categories->parent_id = $request->parentCat;
-        $count = Categories::where('name', '=' ,$request->inputName)->where('parent_id', '=' ,$request->parentCat)->first();
+        $count = Category::where('name', '=' ,$request->inputName)->where('parent_id', '=' ,$request->parentCat)->first();
         if ($count)
         {
             $request->session()->flash('alert-warning', 'Category name is exist!');

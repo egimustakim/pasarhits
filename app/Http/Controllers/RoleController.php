@@ -42,7 +42,7 @@ class RoleController extends Controller
         $roles->name = $request->roleName;
         if ($roles->save()) {
             $request->session()->flash('alert-success', 'Role was successful added!');
-            return redirect('roles');
+            return redirect()->route('roles.index');
         } else {
             $request->session()->flash('alert-warning', 'Role add failed!');
             return redirect()->back()->withInput();
@@ -89,16 +89,31 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $roles = Role::where('id', '=', $request->roleId)->first();
+        $permissions = $request['permissions'];
+        if ($roles->syncPermissions($permissions))
+        {
+            if ($roles->delete())
+            {
+                $request->session()->flash('alert-success', 'Role permissions successful synchronized!');
+                return redirect()->route('roles.index');
+            } else {
+                $request->session()->flash('alert-warning', 'Role permissions fail synchronized!');
+                return redirect()->back();
+            }
+        } else {
+            $request->session()->flash('alert-warning', 'Something went wrong!');
+            return redirect()->back();
+        }
     }
 
     public function roleassign(Request $request)
     {
-        $user = User::where('name', '=', $request->searchName)->first();
-        $role = $request->role_id;
-        if ($user->assignRole($role)) {
+        $users = User::where('name', '=', $request->searchName)->first();
+        $roles = $request->role_id;
+        if ($users->assignRole($roles)) {
             $request->session()->flash('alert-success', 'Role was successful assigned!');
             return redirect()->route('users.index');
         } else {
@@ -127,53 +142,28 @@ class RoleController extends Controller
 
         $roles = Role::where('id', '=', 2)->with(['permissions'])->get();
         $permissions = Permission::all()->pluck('name','id')->toArray();
-            foreach ($roles as $role)
+        foreach ($roles as $role)
+        {
+            $rolePermissions = $role['permissions']->pluck('name')->toArray();
+            // $maches = array_intersect($permissions, $rolePermissions);
+            // $differences = array_diff($rolePermissions, $permissions);
+            foreach ($permissions as $key => $value)
             {
-                $rolePermissions = $role['permissions']->pluck('name')->toArray();
-                // $maches = array_intersect($permissions, $rolePermissions);
-                // $differences = array_diff($rolePermissions, $permissions);
-                foreach ($permissions as $key => $value)
+            //     $roleper = array($role['permissions']);
+            //     $pername = array($permissions);
+            //     return $pername;
+                if (in_array($value, $rolePermissions))
                 {
-                //     $roleper = array($role['permissions']);
-                //     $pername = array($permissions);
-                //     return $pername;
-                    if (in_array($value, $rolePermissions))
-                    {
-                        echo "<b>" . $key . "</b>";
-                        echo "<b>" . $value . "</b>";
-                        echo "\r\n";
-                    } else {
-                        echo $key;
-                        echo $value;
-                        echo "\r\n";
-                    }
+                    echo "<b>" . $key . "</b>";
+                    echo "<b>" . $value . "</b>";
+                    echo "\r\n";
+                } else {
+                    echo $key;
+                    echo $value;
+                    echo "\r\n";
                 }
             }
+        }
 
-            // $roleper = count($role['permissions']);
-            // for($no = 0; $no < $roleper; $no++ )
-            // {
-            //     echo $role['permissions'][$no]['name'];
-            // }
-        // }
-        // return $users;
-        // $no = 0;
-        // foreach ($roles as $role)
-        // {
-        //     echo $role['name'];
-        //     echo " ";
-        //     foreach ($permissions as $permission)
-        //     {
-        //         $roleper = array($role->getPermissionNames());
-        //         $pername = $permission['name'];
-        //         if (in_array($pername, $roleper)) {
-        //             echo "array exist";
-        //         } else {
-        //             echo "array not exist";
-        //         }
-                // echo str_replace(array('[[',']]','[',']','"',),'',$result->getPermissionNames());
-        //         echo "\r\n";
-        //     }
-        // }
     }
 }

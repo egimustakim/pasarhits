@@ -102,6 +102,7 @@
                             <div class="form-group">
                                 <p>Are you sure want to delete this data?</p>
                                 <input type="hidden" class="form-control" name="roleId" id="rol_id">
+                                <input type="hidden" class="form-control" name="permissions[]" id="permissions">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -190,7 +191,7 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-body #rol').val(rol_id)
+        modal.find('.modal-body #rol_id').val(rol_id)
     })
 </script>
 

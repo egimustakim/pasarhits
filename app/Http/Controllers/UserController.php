@@ -58,7 +58,7 @@ class UserController extends Controller
         $user->name = $request->name;
         if($user->save()) {
             $request->session()->flash('alert-success', 'User was successful added!');
-            return redirect('users');
+            return redirect()->route('users.index');
         } else {
             $request->session()->flash('alert-warning', 'User add failed!');
             return redirect()->back()->withInput();

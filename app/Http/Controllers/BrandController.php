@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Brands;
+use App\Brand;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -14,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brands::all();
+        $brands = Brand::all();
         return view('admin/brand', compact('brands'));
     }
 
@@ -36,12 +36,12 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $brands = New Brands;
+        $brands = New Brand;
         $brands->name = $request->brandName;
         if ($brands->save())
         {
             $request->session()->flash('alert-success', 'Brand was successful added!');
-            return redirect('brands');
+            return back();
         }
         else
         {

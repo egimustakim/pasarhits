@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Regencies extends Model
+class Regency extends Model
 {
     protected $fillable = ['province_id', 'name'];
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Villages extends Model
+class Village extends Model
 {
     protected $fillable = ['district_id', 'name'];
 }

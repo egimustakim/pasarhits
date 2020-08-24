@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Colors;
+use App\Color;
 
 class ColorController extends Controller
 {
@@ -14,7 +14,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = Colors::all();
+        $colors = Color::all();
         return view('admin/color', compact('colors'));
     }
 
@@ -36,13 +36,13 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        $count = Colors::where('name', '=' ,$request->colorname)->first();
+        $count = Color::where('name', '=' ,$request->colorname)->first();
         if($count)
         {
             $request->session()->flash('alert-warning', 'Color data exist');
             return redirect()->back()->withInput();
         }
-        $color = New Colors;
+        $color = New Color;
         $color->name = $request->colorname;
         if ($color->save())
         {
@@ -87,13 +87,13 @@ class ColorController extends Controller
      */
     public function update(Request $request)
     {
-        $count = Colors::where('name', '=' ,$request->colorname)->first();
+        $count = Color::where('name', '=' ,$request->colorname)->first();
         if($count)
         {
             $request->session()->flash('alert-warning', 'Color data exist');
             return redirect()->back()->withInput();
         }
-        $color = Colors::findOrFail($request->colorid);
+        $color = Color::findOrFail($request->colorid);
         $color->name = $request->colorname;
         if($color->update())
         {
@@ -115,7 +115,7 @@ class ColorController extends Controller
      */
     public function destroy(Request $request)
     {
-        $color = Colors::findOrFail($request->colorid);
+        $color = Color::findOrFail($request->colorid);
         if($color->delete())
         {
             $request->session()->flash('alert-success', 'Delete data success!');

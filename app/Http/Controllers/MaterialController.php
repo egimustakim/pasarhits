@@ -42,17 +42,17 @@ class MaterialController extends Controller
         if ($count)
         {
             $request->session()->flash('alert-info', 'Material name is exist!');
-            return redirect('materials');
+            return redirect()->route('materials.index');
         }
         elseif ($materials->save())
         {
             $request->session()->flash('alert-success', 'Material was successful added!');
-            return redirect('materials');
+            return redirect()->route('materials.index');
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed added!');
-            return redirect('materials');
+            return redirect()->back();
         }
     }
 
@@ -93,19 +93,18 @@ class MaterialController extends Controller
         if ($count)
         {
             $request->session()->flash('alert-info', 'Material name is exist!');
-            return redirect('materials');
+            return redirect()->route('materials.index');
         }
         elseif ($materials->update())
         {
             $request->session()->flash('alert-success', 'Material was successful added!');
-            return redirect('materials');
+            return redirect()->route('materials.index');
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed added!');
-            return redirect('materials');
+            return redirect()->back();
         }
-        return redirect('materials');
     }
 
     /**
@@ -120,12 +119,12 @@ class MaterialController extends Controller
         if ($materials->delete())
         {
             $request->session()->flash('alert-success', 'Material was successful deleted!');
-            return redirect('materials');
+            return redirect()->route('materials.index');
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed deleted!');
-            return redirect('materials');
+            return redirect()->back();
         }
     }
 }
