@@ -27,7 +27,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>RLAHijabb</span></a>
+              <a href="{{ route('rlaadmin') }}" class="site_title"><i class="fa fa-paw"></i> <span>RLAHijabb</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -52,15 +52,15 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="rlaadmin"><i class="fa fa-home"></i> Home</a>
+                  <li><a href="{{ route('rlaadmin') }}"><i class="fa fa-home"></i> Home</a>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="products">Products</a></li>
-                      <li><a href="categories">Categories</a></li>
-                      <li><a href="colors">Color</a></li>
-                      <li><a href="materials">Materials</a></li>
-                      <li><a href="brands">Brands</a></li>
+                      <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                      <li><a href="{{ route('colors.index')}}">Color</a></li>
+                      <li><a href="{{ route('materials.index')}}">Materials</a></li>
+                      <li><a href="{{ route('brands.index') }}">Brands</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-desktop"></i> Orders <span class="fa fa-chevron-down"></span></a>
@@ -83,17 +83,17 @@
                   </li>
                   <li><a><i class="fa fa-globe"></i> Region <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
-                          <li><a href="provinces">Provinces</a></li>
-                          <li><a href="districts">Districts</a></li>
-                          <li><a href="regencies">Regencies</a></li>
-                          <li><a href="villages">Villages</a></li>
+                          <li><a href="{{ route('provinces') }}">Provinces</a></li>
+                          <li><a href="{{ route('districts') }}">Districts</a></li>
+                          <li><a href="{{ route('regencies') }}">Regencies</a></li>
+                          <li><a href="{{ route('villages') }}">Villages</a></li>
                       </ul>
                   </li>
                   <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="users">Users</a></li>
-                        <li><a href="roles">Roles</a></li>
-                        <li><a href="permissions">Permissions</a></li>
+                        <li><a href="{{ route('users.index') }}">Users</a></li>
+                        <li><a href="{{ route('roles.index') }}">Roles</a></li>
+                        <li><a href="{{ route('permissions.index') }}">Permissions</a></li>
                     </ul>
                 </li>
                 </ul>

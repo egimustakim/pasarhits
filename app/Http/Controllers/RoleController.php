@@ -123,32 +123,39 @@ class RoleController extends Controller
         //         echo "\r\n";
         //     }
         // }
-        $roles = Role::where('id', '=', 2)->with(['permissions'], 'name')->get();
-        $permissions = Permission::select('name')->get();
-        foreach ($roles as $role)
-        {
-            foreach ($permissions as $permission)
-            {
-                $roleper = array($role['permissions']);
-                $pername = array($permissions);
-                if (in_array($pername,$roleper))
-                {
-                    echo "exist";
-                    // echo "<b>" . $permission['name'] . "</b>";
-                    // echo "\r\n";
-                } else {
-                    echo "not";
-                    // echo $permission['name'];
-                    // echo "\r\n";
-                }
 
+
+        $roles = Role::where('id', '=', 2)->with(['permissions'])->get();
+        $permissions = Permission::all()->pluck('name','id')->toArray();
+            foreach ($roles as $role)
+            {
+                $rolePermissions = $role['permissions']->pluck('name')->toArray();
+                // $maches = array_intersect($permissions, $rolePermissions);
+                // $differences = array_diff($rolePermissions, $permissions);
+                foreach ($permissions as $key => $value)
+                {
+                //     $roleper = array($role['permissions']);
+                //     $pername = array($permissions);
+                //     return $pername;
+                    if (in_array($value, $rolePermissions))
+                    {
+                        echo "<b>" . $key . "</b>";
+                        echo "<b>" . $value . "</b>";
+                        echo "\r\n";
+                    } else {
+                        echo $key;
+                        echo $value;
+                        echo "\r\n";
+                    }
+                }
             }
+
             // $roleper = count($role['permissions']);
             // for($no = 0; $no < $roleper; $no++ )
             // {
             //     echo $role['permissions'][$no]['name'];
             // }
-        }
+        // }
         // return $users;
         // $no = 0;
         // foreach ($roles as $role)

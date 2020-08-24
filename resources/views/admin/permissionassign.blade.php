@@ -64,28 +64,46 @@
                             @foreach ($roles as $role)
                            <label><h4> {{ $role['name'] }} <h4></label>
                             <input type="hidden" name="roleid" id="roleid" value="{{ $role['id'] }}">
-                            @endforeach
                         </div>
 
                         <section id="web-application">
                             <div class="row fontawesome-icon-list">
-                                @foreach ($roles as $result)
-                                    <?php
-                                    $percount = $result['permissions']->count();
-                                    for ($no = 0; $percount > $no; $no++){
-                                    ?>
-                                    <div class="fa-hover col-md-3 col-sm-4 col-xs-12">
-                                        <div class="checkbox">
-                                            <label>
-                                            <input name="permissions[]" type="checkbox" value="{{ $result['permissions'][$no]['id'] }}"> {{ $result['permissions'][$no]['name'] }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                     <?php } ?>
-                                @endforeach
+                                <?php
+                                foreach ($roles as $role)
+                                {
+                                    $rolePermissions = $role['permissions']->pluck('name')->toArray();
+                                    foreach ($permissions as $key => $value)
+                                    {
+                                        if (in_array($value, $rolePermissions))
+                                        {
+                                ?>
+                                            <div class="fa-hover col-md-3 col-sm-4 col-xs-12">
+                                                <div class="checkbox">
+                                                    <label>
+                                                    <input name="permissions[]" type="checkbox" checked="checked" value="{{ $key }}"> {{ $value }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                <?php
+                                        } else {
+                                ?>
+                                            <div class="fa-hover col-md-3 col-sm-4 col-xs-12">
+                                                <div class="checkbox">
+                                                    <label>
+                                                    <input name="permissions[]" type="checkbox" value="{{ $key }}"> {{ $value }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                <?php
+                                        }
+
+                                    }
+                                }
+                                ?>
+                            @endforeach
                                 <div class="col-md-5 col-sm-5 col-xs-12">
-                                    <button type="submit" class="btn btn-primary">Assign Permission</a>
-                                    <a href="{{ url('rlaadmin/roles') }}"><button type="button" class="btn btn-info">Cancel</button></a>
+                                    <button type="submit" class="btn btn-primary">Save Permission</a>
+                                    <a href="{{ route('roles.index') }}"><button type="button" class="btn btn-info">Cancel</button></a>
                                 </div>
                             </div>
                         </section>

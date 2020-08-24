@@ -45,10 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/brands', 'BrandController');
         Route::resource('/colors', 'ColorController');
         // wilayah
-        Route::get('/provinces', 'CountryController@provinces');
-        Route::get('/districts', 'CountryController@districts');
-        Route::get('/regencies', 'CountryController@regencies');
-        Route::get('/villages', 'CountryController@villages');
+        Route::get('/provinces', 'CountryController@provinces')->name('provinces');
+        Route::get('/districts', 'CountryController@districts')->name('districts');
+        Route::get('/regencies', 'CountryController@regencies')->name('regencies');
+        Route::get('/villages', 'CountryController@villages')->name('villages');
         Route::get('/json-regencies', 'CountryController@regenciesjson');
         Route::get('/json-districts', 'CountryController@districtsjson');
         Route::get('/json-villages', 'CountryController@villagesjson');
@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/materials', 'MaterialController');
         Route::resource('/permissions', 'PermissionController');
         Route::get('/json-permissions', 'PermissionController@permissionJson');
-        Route::get('/permissionlist', 'PermissionController@permissionList');
+        Route::get('/permissionlist/{id}', 'PermissionController@permissionList');
         Route::post('/permissionassign', 'PermissionController@permissionAssign')->name('permissionassign');
         Route::resource('/roles', 'RoleController');
         Route::post('/roleassign', 'RoleController@roleassign')->name('role.assign');

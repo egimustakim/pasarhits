@@ -119,7 +119,6 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Add New Role</button>
-                    <a href="{{ url('rlaadmin/permissionlist') }}" class="btn btn-primary">Assign Permission</a>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -156,6 +155,7 @@
                           <td>{{ $role['name'] }}</td>
                           <td><button class="btn btn-info btn-sm" data-rolesname="{{ $role['name'] }}" data-roleid="{{ $role['id'] }}" data-toggle="modal" data-target="#modalEdit">Edit</button></td>
                           <td><button class="btn btn-danger btn-sm" data-roleid="{{ $role['id'] }}" data-toggle="modal" data-target="#modalDelete">Delete</button></a></td>
+                          <td><a href="permissionlist/{{ $role['id'] }}"><button class="btn btn-info btn-sm">Assign Permission</button></a></td>
                           <?php $no++ ?>
                           @endforeach
                         </tr>

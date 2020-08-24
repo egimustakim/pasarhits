@@ -101,32 +101,18 @@ class PermissionController extends Controller
         return response()->json($users);
     }
 
-    public function permissionList()
+    public function permissionList($id)
     {
-        // $permissions = Permission::all();
-        // $roles = Role::all();
-        // return view('admin/permissionassign', compact('permissions', 'roles'));
-        $roles = Role::where('id', '=', 2)->with(['permissions'])->get();
-        $permissions = Permission::all();
-        foreach ($permissions as $permission)
-        { foreach ($roles as $role)
-            {
-                $perdata = $permission['name'];
-                $roleper = $role->getPermissionNames();
-                if (in_array($perdata, $$roleper))
-                {
-                    //
-                }
-            }
-        }
-        return view('admin/permissionassign', compact('roles'));
+        $roles = Role::where('id', '=', $id)->with(['permissions'])->get();
+        $permissions = Permission::all()->pluck('name', 'id')->toArray();
+        return view('admin/permissionassign', compact('roles', 'permissions'));
     }
 
     public function permissionAssign(Request $request)
     {
-        $role = Role::where('name', '=' ,$request->roleName)->first();
-        $permissions = New Permission;
-        if($role->syncPermissions($request['permissions']))
+        $roles = Role::where('id', '=' ,$request->roleid)->with(['permissions'])->first();
+        $permissions = $request['permissions'];
+        if ($roles->syncPermissions($permissions))
         {
             $request->session()->flash('alert-success', 'Permissions was successful assigned!');
             return redirect()->route('roles.index');
