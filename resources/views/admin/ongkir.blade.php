@@ -392,7 +392,7 @@
 $('#provinces').on('change', function(e){
     console.log(e);
     var province_id = e.target.value;
-    $.get('/json-regencies?province_id=' + province_id,function(data){
+    $.get('/rlaadmin/json-regencies?province_id=' + province_id,function(data){
         console.log(data);
         $('#regencies').empty();
         $('#regencies').append('<option>Choose Regencies</option>');
@@ -405,7 +405,7 @@ $('#provinces').on('change', function(e){
 $('#regencies').on('change', function(e){
     console.log(e);
     var regency_id = e.target.value;
-    $.get('/json-districts?regency_id=' + regency_id,function(data){
+    $.get('/rlaadmin/json-districts?regency_id=' + regency_id,function(data){
         console.log(data);
         $('#districts').empty();
         $('#districts').append('<option>Choose Districts</option>');
@@ -418,7 +418,7 @@ $('#regencies').on('change', function(e){
 $('#districts').on('change', function(e){
     console.log(e);
     var district_id = e.target.value;
-    $.get('/json-villages?districts_id=' + district_id,function(data){
+    $.get('/rlaadmin/json-villages?districts_id=' + district_id,function(data){
         console.log(data);
         $('#villages').empty();
         $('#villages').append('<option>Choose Villages</option>');

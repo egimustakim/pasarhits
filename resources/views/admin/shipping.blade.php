@@ -109,7 +109,7 @@
                     </thead>
                     <tbody>
                     <?php $no=1 ?>
-                    @foreach ($shipping as $ship)
+                    @foreach ($shippings as $ship)
                       <tr>
                         <td>{{$no}}</td>
                         <td>{{$ship['name']}}</td>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Materials;
+use App\Material;
 
 class MaterialController extends Controller
 {
@@ -14,7 +14,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materials = Materials::orderBy('name', 'ASC')->get();
+        $materials = Material::orderBy('name', 'ASC')->get();
         return view('admin/material', compact('materials'));
     }
 
@@ -36,23 +36,23 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        $materials = New Materials;
+        $materials = New Material;
         $materials->name = $request->materialName;
-        $count = Materials::where('name', '=' ,$request->materialName)->first();
+        $count = Material::where('name', '=' ,$request->materialName)->first();
         if ($count)
         {
             $request->session()->flash('alert-info', 'Material name is exist!');
-            return redirect()->route('materials.index');
+            return back();
         }
         elseif ($materials->save())
         {
             $request->session()->flash('alert-success', 'Material was successful added!');
-            return redirect()->route('materials.index');
+            return back();
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed added!');
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
     }
 
@@ -87,23 +87,23 @@ class MaterialController extends Controller
      */
     public function update(Request $request)
     {
-        $materials = Materials::findOrFail($request->materialId);
+        $materials = Material::findOrFail($request->materialId);
         $materials->name = $request->materialName;
-        $count = Materials::where('name', '=' ,$request->materialName)->first();
+        $count = Material::where('name', '=' ,$request->materialName)->first();
         if ($count)
         {
             $request->session()->flash('alert-info', 'Material name is exist!');
-            return redirect()->route('materials.index');
+            return redirect()->back()->withInput();
         }
         elseif ($materials->update())
         {
             $request->session()->flash('alert-success', 'Material was successful added!');
-            return redirect()->route('materials.index');
+            return back();
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed added!');
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
     }
 
@@ -115,16 +115,16 @@ class MaterialController extends Controller
      */
     public function destroy(Request $request)
     {
-        $materials = Materials::findOrFail($request->materialId);
+        $materials = Material::findOrFail($request->materialId);
         if ($materials->delete())
         {
             $request->session()->flash('alert-success', 'Material was successful deleted!');
-            return redirect()->route('materials.index');
+            return back();
         }
         else
         {
             $request->session()->flash('alert-info', 'Material was failed deleted!');
-            return redirect()->back();
+            return back();
         }
     }
 }

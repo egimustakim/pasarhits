@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class CategoryController extends Controller
 {
@@ -48,7 +49,7 @@ class CategoryController extends Controller
         if ($categories->save())
         {
             $request->session()->flash('alert-success', 'Category was successful added!');
-            return redirect('categories');
+            return back();
         }
         else
         {
@@ -144,5 +145,12 @@ class CategoryController extends Controller
             $subcategories->save();
             return redirect('categories');
         }
+    }
+
+    public function categoryjson()
+    {
+        $parents_id = Input::get('parent_id');
+        $categories = Category::where('parent_id', '=', $parents_id)->get();
+        return response()->json($categories);
     }
 }

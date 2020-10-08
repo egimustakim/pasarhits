@@ -56,7 +56,7 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="products">Products</a></li>
+                      <li><a href="{{ route('products.index') }}">Products</a></li>
                       <li><a href="{{ route('categories.index') }}">Categories</a></li>
                       <li><a href="{{ route('colors.index')}}">Color</a></li>
                       <li><a href="{{ route('materials.index')}}">Materials</a></li>
@@ -72,8 +72,8 @@
                   </li>
                   <li><a><i class="fa fa-truck"></i> Ongkir <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="shipping">Shipping Provider</a></li>
-                        <li><a href="ongkir">Ongkir JNE</a></li>
+                        <li><a href="{{ route('shipping') }}">Shipping Provider</a></li>
+                        <li><a href="{{ route('ongkir') }}">Ongkir</a></li>
                         <li><a href="ongkir">Ongkir JET</a></li>
                         <li><a href="ongkir">Ongkir Wahana</a></li>
                         <li><a href="ongkir">Ongkir Tiki</a></li>
@@ -89,6 +89,14 @@
                           <li><a href="{{ route('villages') }}">Villages</a></li>
                       </ul>
                   </li>
+                  <li><a><i class="fa fa-globe"></i> Raja Ongkir <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ route('roprovinces') }}">Provinces</a></li>
+                        <li><a href="{{ route('rodistricts') }}">Districts</a></li>
+                        <li><a href="{{ route('roregencies') }}">Regencies</a></li>
+                        <li><a href="{{ route('rovillages') }}">Villages</a></li>
+                    </ul>
+                </li>
                   <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ route('users.index') }}">Users</a></li>

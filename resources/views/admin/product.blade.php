@@ -11,7 +11,7 @@
         <div class="">
           <div class="page-title">
             <div class="title_left">
-                <button type="button" class="btn btn-success">Add New Product</button>
+                <a href="{{ route('productadd') }}"><button type="button" class="btn btn-success">Add New Product</button></a>
             </div>
           </div>
 

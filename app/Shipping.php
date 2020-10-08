@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipping extends Model
 {
-    protected $table = 'shipping';
+    protected $table = 'shippings';
+
     protected $fillable = ['name', 'type'];
 
     public function setNameAttribute($value)

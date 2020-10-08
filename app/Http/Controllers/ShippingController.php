@@ -9,8 +9,8 @@ class ShippingController extends Controller
 {
     public function index()
     {
-        $shipping = Shipping::all();
-        return view('admin/shipping', compact('shipping'));
+        $shippings = Shipping::all();
+        return view('admin/shipping', compact('shippings'));
     }
 
     public function addprovider(Request $request)

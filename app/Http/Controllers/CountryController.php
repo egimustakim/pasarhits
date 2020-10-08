@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Province;
-use App\Regencie;
+use App\Regency;
 use App\District;
 use App\Village;
 
 class CountryController extends Controller
 {
+    public function ongkir()
+    {
+        $provinces = Province::all();
+        $regencies = Regency::all();
+        $districts = District::all();
+        $villages = Village::all();
+        return view('admin/ongkir', compact('provinces', 'regencies', 'districts', 'villages'));
+    }
     public function provinces()
     {
         $provinces = Province::all();
@@ -31,8 +39,12 @@ class CountryController extends Controller
 
     public function villages()
     {
-        $villages = Village::paginate(100);
-        return view('admin/village', compact('villages'));
+        $villages = Village::chunk(50, function($villages){
+            foreach ($villages as $item) {
+                echo $item['name'];
+            }
+        });
+        //return view('admin/village', compact('villages'));
     }
 
     public function regenciesjson()

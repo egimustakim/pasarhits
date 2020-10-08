@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('rlaadmin', 'RlaadminController@index')->name('rlaadmin');
     Route::prefix('rlaadmin')->group(function () {
         Route::resource('/categories', 'CategoryController');
+        Route::get('/json-category', 'CategoryController@categoryjson');
         Route::resource('/colors', 'ColorController');
         Route::resource('/brands', 'BrandController');
         Route::resource('/colors', 'ColorController');
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/districts', 'CountryController@districts')->name('districts');
         Route::get('/regencies', 'CountryController@regencies')->name('regencies');
         Route::get('/villages', 'CountryController@villages')->name('villages');
+        Route::get('ongkir', 'CountryController@ongkir')->name('ongkir');
         Route::get('/json-regencies', 'CountryController@regenciesjson');
         Route::get('/json-districts', 'CountryController@districtsjson');
         Route::get('/json-villages', 'CountryController@villagesjson');
@@ -58,14 +60,21 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/json-permissions', 'PermissionController@permissionJson');
         Route::get('/permissionlist/{id}', 'PermissionController@permissionList');
         Route::post('/permissionassign', 'PermissionController@permissionAssign')->name('permissionassign');
+        Route::resource('/products', 'ProductController');
+        Route::get('/productadd', 'ProductController@productadd')->name('productadd');
+        Route::get('/roprovinces', 'RajaongkirController@getProvinces')->name('roprovinces');
+        Route::get('/rodistricts', 'RajaongkirController@getDistricts')->name('rodistricts');
+        Route::get('/roregencies', 'RajaongkirController@getRegencies')->name('roregencies');
+        Route::get('/rovillages', 'RajaongkirController@getVillages')->name('rovillages');
         Route::resource('/roles', 'RoleController');
         Route::post('/roleassign', 'RoleController@roleassign')->name('role.assign');
-        Route::get('/shipping', 'ShippingController@index');
+        Route::get('/shipping', 'ShippingController@index')->name('shipping');
         Route::post('/shipping/addprovider', 'ShippingController@addprovider');
         Route::resource('/users', 'UserController');
         Route::get('/fetchdata', 'UserController@fetchdata')->name('fetchdata');
+        //Testing
+        Route::get('/testing', 'TestController@testing')->name('testing');
+        Route::get('viewtest', 'TestController@viewtest')->name('viewtest');
     });
 });
-
-Route::get('punyarole', 'RoleController@punyarole');
 // Route::get('/home', 'HomeController@index')->name('home');
