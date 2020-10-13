@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/fetchdata', 'UserController@fetchdata')->name('fetchdata');
         //Testing
         Route::get('/testing', 'TestController@testing')->name('testing');
-        Route::get('viewtest', 'TestController@viewtest')->name('viewtest');
+        Route::get('/viewtest', 'TestController@viewtest')->name('viewtest');
     });
 });
 // Route::get('/home', 'HomeController@index')->name('home');

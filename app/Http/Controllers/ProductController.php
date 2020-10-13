@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Brand;
+use App\Color;
+use App\Material;
+use App\Size;
 
 class ProductController extends Controller
 {
@@ -35,7 +39,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $products = New Products;
+        // $products->name = $request->name;
+        // $products->desc = $request->desc;
+        // $products->id_category = $request->category3;
+        // $products->id_brand = $request->brand;
+        // $products->price = $request->price;
+        // $products->stock = $request->stock;
+        // $products->productsku = $request->productsku;
+        // $products->imgupload = $request->imgupload;
+        dd($request);
     }
 
     /**
@@ -86,6 +99,10 @@ class ProductController extends Controller
     public function productAdd()
     {
         $categories = Category::where('parent_id', '=', null)->get();
-        return view('admin/product-add', compact('categories'));
+        $brands = Brand::all();
+        $colors = Color::all();
+        $materials = Material::all();
+        $sizes = Size::all();
+        return view('admin/product-add', compact('categories', 'brands', 'colors', 'materials', 'sizes'));
     }
 }

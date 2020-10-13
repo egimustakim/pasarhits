@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Regency;
+use App\Material;
 
 class TestController extends Controller
 {
@@ -13,8 +13,26 @@ class TestController extends Controller
     }
     public function testing()
     {
-        $districts = Regency::all();
-        return response()->json($districts);
+        $materials = Material::all();
+        $no = 1;
+            echo "{";
+            foreach ($materials as $material) {
+                if ($no <= 5) {
+                echo $no . $material['name'];
+                $no++;
+                } else {
+                    $no = 1;
+                    echo "}";
+                    echo "</br>";
+                    echo "{";
+                    echo $no . $material['name'];
+                    $no++;
+                }
+            }
+
+
+        // $products = Products::with('category', '');
+        // return response()->json($districts);
         // $curl = curl_init();
 
         // curl_setopt_array($curl, array(
