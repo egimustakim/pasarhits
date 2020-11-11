@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('color_id');
             $table->unsignedBigInteger('material_id');
             $table->double('price', 15);
+            $table->string('sku', 20);
             $table->unsignedBigInteger('user_id');
             $table->boolean('isPublished');
             $table->timestamps();
@@ -46,24 +47,6 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
         });
-
-        // Schema::table('products', function (Blueprint $table) {
-        //     $table->foreign('category_id')
-        //         ->references('id')->on('categories')
-        //         ->onDelete('cascade');
-
-        //     $table->foreign('brand_id')
-        //         ->references('id')->on('brands')
-        //         ->onDelete('cascade');
-
-        //     $table->foreign('color_id')
-        //         ->references('id')->on('colors')
-        //         ->onDelete('cascade');
-
-        //     $table->foreign('user_id')
-        //         ->references('id')->on('users')
-        //         ->onDelete('cascade');
-        // });
 
     }
 

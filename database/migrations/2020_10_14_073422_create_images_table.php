@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMetasTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,17 @@ class CreateMetasTable extends Migration
      */
     public function up()
     {
-        Schema::create('metas', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('size_id');
             $table->unsignedBigInteger('product_id');
-            $table->double('stock', 3);
+            $table->string('name');
+            $table->string('guide');
             $table->timestamps();
         });
 
-        Schema::table('metas', function (Blueprint $table) {
+        Schema::table('images', function (Blueprint $table) {
             $table->foreign('product_id')
                 ->references('id')->on('products')
-                ->onDelete('cascade');
-
-            $table->foreign('size_id')
-                ->references('id')->on('sizes')
                 ->onDelete('cascade');
         });
     }
@@ -39,6 +35,6 @@ class CreateMetasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('metas');
+        Schema::dropIfExists('images');
     }
 }

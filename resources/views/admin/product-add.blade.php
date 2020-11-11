@@ -1,8 +1,6 @@
 @extends('template.back')
 @section('styles')
-    <!-- bootstrap-wysiwyg -->
-    <link href="{{ asset('vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
-    <!-- bootstrap-wysiwyg -->
+    <!-- extra -->
     <link href="{{ asset('backend/css/extra.css') }}" rel="stylesheet">
 @endsection
 @section('content')
@@ -27,6 +25,15 @@
             </div>
 
             <div class="clearfix"></div>
+            <!-- error message-->
+            <div class="flash-message">
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
+
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                @endif
+                @endforeach
+            </div> <!-- end .flash-message -->
 
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -51,7 +58,7 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <form id="demo-form2" action="{{ route('products.store') }}" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                    <form id="demo-form2" action="{{ route('products.store') }}" method="post" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="product-name">Product Name <span class="required">*</span>
@@ -64,80 +71,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="product-description">Product Description <span class="required">*</span></label>
                             <div id="alerts"></div>
                             <div class="col-md-8 col-sm-8 col-xs-12">
-                                <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor-one">
-                                    <div class="btn-group">
-                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                        </ul>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                        <li>
-                                            <a data-edit="fontSize 5">
-                                            <p style="font-size:17px">Huge</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 3">
-                                            <p style="font-size:14px">Normal</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-edit="fontSize 1">
-                                            <p style="font-size:11px">Small</p>
-                                            </a>
-                                        </li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
-                                        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
-                                        <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
-                                        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
-                                        <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
-                                        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-                                        <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
-                                        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
-                                        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
-                                        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
-                                        <div class="dropdown-menu input-append">
-                                        <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
-                                        <button class="btn" type="button">Add</button>
-                                        </div>
-                                        <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
-                                        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
-                                    </div>
-
-                                    <div class="btn-group">
-                                        <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
-                                        <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
-                                    </div>
-                                </div>
-
-                                <div id="editor-one" class="editor-wrapper"></div>
-
-                                <textarea name="descr" id="descr" style="display:none;"></textarea>
-
-                                <br />
+                                <textarea class="form-control" name="description" id="description"></textarea>
                             </div>
                         </div><!-- form-group -->
                         <div class="form-group">
@@ -167,6 +101,7 @@
                                 </select>
                             </div>
                         </div><!-- form-group -->
+                        <div class="ln_solid"></div>
                         <div class="form-group">
                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="brand">Brand
                           </label>
@@ -203,29 +138,44 @@
                                 </select>
                             </div>
                         </div><!-- form-group -->
-                        <div class="form-group">
-                            <label class="col-md-3 col-sm-3 col-xs-12 control-label">Size <span class="required">*</span></label>
-                            <div class="col-md-2 col-sm-2 col-xs-12">
-                                <?php
-                                $no = 1;
-                                foreach ($sizes as $size) {
-                                    if ($no <= 5 ) {
-                                    echo "
-                                <div class=\"checkbox\">
-                                    <label>
-                                        <input . $no . type=\"checkbox\" class=\"flat\" name=\"size[]\" id=\"size\">" . $size['name'] .
-                                    "</label>
-                                </div>";
-                                $no++;
-                                    } else {
-                                        $no = 1;
-                            echo "</div>
-                            <div class=\"col-md-2 col-sm-2 col-xs-12\">";
-                                    }
-                                }
-                                ?>
+                        <div class="field_wrapper">
+                            <!--added outers class-->
+                            <div class="outers">
+                              <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 control-label">Size & Stock <span class="required">*</span></label>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                  <!--dummy selct options-->
+                                  <select class="form-control" name="size[]" id="color" required>
+                                    <option>Choose Size</option>
+
+                                    <option value="1">S</option>
+                                    <option value="2">M</option>
+                                    <option value="3">L</option>
+                                    <option value="4">XL</option>
+                                    <option value="5">One Size</option>
+                                    <option value="45">35</option>
+                                    <option value="46">36</option>
+                                    <option value="47">37</option>
+                                    <option value="48">38</option>
+                                    <option value="49">39</option>
+                                    <option value="50">40</option>
+                                    <option value="51">41</option>
+                                    <option value="52">42</option>
+                                    <option value="53">43</option>
+                                    <option value="54">44</option>
+                                  </select>
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                  <input type="text" class="form-control" name="stock[]" id="stock" placeholder="10" required>
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                  <a href="javascript:void(0);" class="add_button" title="Add field">
+                                    <span class="glyphicon glyphicon-plus red" aria-hidden="true" style="font-size:20px;top:6px;"></span>
+                                  </a>
+                                </div>
+                              </div>
                             </div>
-                        </div><!-- form-group -->
+                        </div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span></label>
@@ -235,23 +185,18 @@
                             </div>
                         </div><!-- form-group -->
                         <div class="form-group">
-                            <label class="control-label col-md-3"><span class="required" for="stock">*</span>Stock <span class="required">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                              <input type="text" class="form-control" name="stock" id="stock" placeholder="10" required>
-                            </div>
-                        </div><!-- form-group -->
-                        <div class="form-group">
                             <label class="control-label col-md-3" for="product-sku">Product SKU</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <input type="text" class="form-control" name="productsku" id="productsku">
                             </div>
                         </div><!-- form-group -->
+
                         <br><div class="form-group">
                             <div class="row">
                                 <div class="col-sm-2 imgUp">
                                     <div class="imagePreview"></div>
                                     <label class="btn btn-upload">
-                                        Browse<input type="file" class="uploadFile img" name="imgupload[]" style="width: 0px;height: 0px;overflow: hidden;">
+                                        Browse<input type="file" class="uploadFile img" name="imgupload[]" id="imgupload" style="width: 0px;height: 0px;overflow: hidden;">
                                     </label>
                                 </div><!-- col-2 -->
                                 <i class="fa fa-plus imgAdd"></i>
@@ -261,8 +206,8 @@
                         <div class="form-group">
                           <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button class="btn btn-primary" type="button">Cancel</button>
-                            <button type="submit" name="savearchive" class="btn btn-primary">Save & Archive</button>
-                            <button type="submit" name="savepublish" class="btn btn-success">Save & Publish</button>
+                            <button type="submit" name="submit" value="savearchive" class="btn btn-primary">Save & Archive</button>
+                            <button type="submit" name="submit" value="savepublish" class="btn btn-success">Save & Publish</button>
                           </div>
                         </div>
 
@@ -276,9 +221,13 @@
         <!-- /page content -->
 @endsection
 @section('scripts')
-    <!-- bootstrap-wysiwyg -->
-    <script src="{{ asset('vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') }}"></script>
-    <script src="{{ asset('vendors/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
-    <script src="{{ asset('vendors/google-code-prettify/src/prettify.js') }}"></script>
+    <!-- extra -->
     <script src="{{ asset('backend/js/extra.js') }}"></script>
+    <!-- tinumce-wysiwyg -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+        selector: '#description'
+      });
+    </script>
 @endsection
