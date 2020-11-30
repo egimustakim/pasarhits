@@ -12,7 +12,7 @@ class Meta extends Model
 
     public function size()
     {
-        return $this->hasOne('App/Size', 'id', 'size_id');
+        return $this->hasOne('App\Size', 'id', 'size_id');
     }
 
     public function product()

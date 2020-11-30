@@ -9,11 +9,19 @@ class TestController extends Controller
 {
     public function testing()
     {
-        $products = Product::with(['brand', 'category', 'color', 'image', 'material', 'meta', 'user'])->get();
+        $products = Product::with(['brand', 'category', 'color', 'image', 'material', 'meta', 'meta.size', 'user'])->get();
         foreach ($products as $product)
         {
-            echo $product['name'] ." ". strip_tags($product['description']) ." ". $product['category']['name'] ." ". $product['brand']['name'] ." ". $product['color']['name'] ." ". $product['material']['name'] ." ". $product['price'] ." ". $product['sku'] ." ". $product['user']['name'] ."</br>";
-            echo $product['meta'][0]['stock'];
+            foreach ($product->meta as $meta)
+            {
+
+                    echo $product['name'] ." ". strip_tags($product['description']) ." ". $product['category']['name'] ." ". $product['brand']['name'] ." ". $product['color']['name'] ." ". $product['material']['name'] ." ". $product['price'] ." ". $product['sku'] ." ". $product['user']['name'] ." ". $meta->size->name ." ". $meta->stock;
+                    foreach($product->image as $image)
+                    {
+                        echo $image->name ." ". $image->guide;
+                    } "</br>";
+
+            }
         }
 
             // $products = Product::where('id', '=', 3)->with(['meta', 'image'])->get();

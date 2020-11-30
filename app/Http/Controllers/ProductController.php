@@ -25,7 +25,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin/product');
+        $products = Product::with(['brand', 'category', 'color', 'image', 'material', 'meta', 'meta.size', 'user'])->get();
+        return view('admin/product', compact('products'));
     }
 
     /**
@@ -97,14 +98,15 @@ class ProductController extends Controller
         $name = str_replace(' ', '-', substr($request->name,0,20));
         $year = date("Y");
         $month = date("m");;
-        $target_dir = 'public/images/products/'.$year.'/'.$month;
+        $target_dir = 'public/products/'.$year.'/'.$month.'/';
+        $dirname = 'storage/products/'.$year.'/'.$month.'/';
 
         foreach ($request->imgupload as $imgname) {
             $extention = $imgname->getClientOriginalExtension();
             $imgname = $name . '-' . $no . '.' . $extention;
             $images = New Image;
             $images->name = $imgname;
-            $images->guide = $target_dir;
+            $images->guide = $dirname;
             $products->image()->save($images);
             $no++;
         }
@@ -114,11 +116,11 @@ class ProductController extends Controller
             Storage::makeDirectory($target_dir);
         }
 
+        $no = 1;
         if ($request->hasFile('imgupload')) {
             foreach ($request->imgupload as $image) {
                 if ($image->isValid()) {
                         $imgname = $name . '-' . $no . '.' . $extention;
-                        $store = $image->storeAS($target_dir, $imgname);
                         $store = $image->storeAS($target_dir, $imgname);
                 } else {
                     abort(500, 'Could not upload image :');
